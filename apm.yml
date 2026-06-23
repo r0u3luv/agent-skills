@@ -1,0 +1,13 @@
+name: my-skills
+version: 0.1.0
+description: Personal AI agent skills, instructions, prompts, and adapters.
+author: ruo
+license: MIT
+includes: auto
+
+dependencies:
+  apm:
+    - multica-ai/andrej-karpathy-skills
+    - git: mattpocock/skills
+      skills:
+        - grill-me
