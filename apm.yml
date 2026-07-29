@@ -11,3 +11,10 @@ dependencies:
     - git: mattpocock/skills
       skills:
         - grill-me
+        - grill-with-docs
+    - git: vercel-labs/skills
+      skills:
+        - find-skills
+    - git: obra/superpowers
+      skills:
+        - brainstorming
