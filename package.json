@@ -1,0 +1,35 @@
+{
+  "name": "rou0-skills",
+  "private": true,
+  "engines": {
+    "node": ">=22.20.0"
+  },
+  "scripts": {
+    "skills:sync": "skills experimental_sync -a claude-code -a codex -y"
+  },
+  "devDependencies": {
+    "skills": "1.7.4"
+  },
+  "skills": [
+    {
+      "source": "multica-ai/andrej-karpathy-skills",
+      "ref": "2c606141936f1eeef17fa3043a72095b4765b9c2",
+      "skills": ["karpathy-guidelines"]
+    },
+    {
+      "source": "mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "skills": ["grill-me", "grill-with-docs"]
+    },
+    {
+      "source": "vercel-labs/skills",
+      "ref": "a80e4c9d12d607631249d4d7d059f835d4b2f13a",
+      "skills": ["find-skills"]
+    },
+    {
+      "source": "obra/superpowers",
+      "ref": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
+      "skills": ["brainstorming"]
+    }
+  ]
+}

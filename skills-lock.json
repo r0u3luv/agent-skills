@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "skills": {
+    "brainstorming": {
+      "source": "obra/superpowers",
+      "ref": "2ce8aa15d05bd57213e6f746f953aafb7ded7a8b",
+      "sourceType": "github",
+      "skillPath": "skills/brainstorming/SKILL.md",
+      "computedHash": "759eaa3b4b3d06d9e1c98c24bcd58eeb4d2faf724b3239f81e8559aa41e28fdd",
+      "via": "."
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "ref": "a80e4c9d12d607631249d4d7d059f835d4b2f13a",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "913b9d37d0d54047dd65222bb8c67b2bf04e3cb87dcad1729068d7a8b2c8c396",
+      "via": "."
+    },
+    "grill-me": {
+      "source": "mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "sourceType": "github",
+      "skillPath": "skills/productivity/grill-me/SKILL.md",
+      "computedHash": "9cdbb4b8f7a3aeaef82e6230c9e823500d4a8a1214c726cf342cf9829d34fc7d",
+      "via": "."
+    },
+    "grill-with-docs": {
+      "source": "mattpocock/skills",
+      "ref": "5beb35b040e3de97e54fa9e386d7e42d15c295c2",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/grill-with-docs/SKILL.md",
+      "computedHash": "35e62aa423aaeab6a414bcac273f56dfb17802ef2334b41b6a3b00f28196c8cf",
+      "via": "."
+    },
+    "karpathy-guidelines": {
+      "source": "multica-ai/andrej-karpathy-skills",
+      "ref": "2c606141936f1eeef17fa3043a72095b4765b9c2",
+      "sourceType": "github",
+      "skillPath": "skills/karpathy-guidelines/SKILL.md",
+      "computedHash": "41e8ca055bbde13d240776a14a076a59614057200340c243130a76ba4e64cac8",
+      "via": "."
+    }
+  }
+}
