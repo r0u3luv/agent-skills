@@ -1,0 +1,13 @@
+{
+  "name": "r0u3luv-skills",
+  "version": "0.1.0",
+  "description": "Personal AI agent skills, prompts, and subagents for software engineering workflows.",
+  "author": {
+    "name": "ruo",
+    "url": "https://github.com/r0u3luv"
+  },
+  "homepage": "https://github.com/r0u3luv/skills",
+  "repository": "https://github.com/r0u3luv/skills",
+  "license": "MIT",
+  "skills": "./skills"
+}

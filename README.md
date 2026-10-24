@@ -1,123 +1,93 @@
 # my-skills
 
-APMファースト（Agent Package Managerファースト）のレイアウトで管理される、個人のAIエージェント向けスキル集。
-
-## 戦略
-
-`.apm/` を一次情報源（Source of Truth）として使用し、このリポジトリ自体を APM パッケージとして他のプロジェクトから参照します。外部で再利用したいスキルは `apm.yml` の依存関係に追加し、各プロジェクトではこのリポジトリを `apm install` します。
+標準的な `skills/<name>/SKILL.md` レイアウトとネイティブプラグインマニフェストで管理される、個人のAIエージェント向けスキル集。
 
 ## ディレクトリ構成
 
 ```text
-.apm/
-  skills/          標準的な再利用可能スキル
-  instructions/    共通の動作およびエンジニアリングの基本方針
-  prompts/         再利用可能なプロンプトテンプレート
-  agents/          役割別のエージェント定義
-adapters/
-  claude-plugin/   Claude Codeプラグイン用パッケージングのメモ
-  codex/           Codex向け運用メモ
-  copilot/         GitHub Copilot向け運用メモ
-  cursor/          Cursor向け運用メモ
-  windsurf/        Windsurf向け運用メモ
-docs/              人間用カタログおよび作成ガイド
-tests/             スキル検証用フィクスチャ
+.claude-plugin/
+  plugin.json        Claude Code / Codex / Copilot 用プラグイン定義
+  marketplace.json   マーケットプレイス定義
+skills/              標準的な再利用可能スキル (skills/<name>/SKILL.md)
+agents/              役割別のサブエージェント定義
+prompts/             再利用可能なプロンプトテンプレート
+scripts/
+  link-skills.sh     ローカル環境 (~/.claude/skills, ~/.agents/skills) へのシンボリックリンク作成
+docs/                人間用カタログおよび作成ガイド
+tests/               スキル検証用フィクスチャ
 ```
 
-## 他のプロジェクトで使う
+## インストールと使い方
 
-対象プロジェクトのルートで、このリポジトリを APM 依存としてインストールします。
+### 1. ローカル開発・個人環境への即時反映（推奨）
+
+このリポジトリをクローンしている環境では、`scripts/link-skills.sh` を実行すると `~/.claude/skills` と `~/.agents/skills` に各スキルのシンボリックリンクが作成されます。
 
 ```bash
-cd /path/to/target-project
-apm install /Users/ruo/Project/my-tools/rou0-skills --target codex
+./scripts/link-skills.sh
 ```
 
-これにより、対象プロジェクト側の `apm.yml` にこのリポジトリが依存関係として追加され、`apm.lock.yaml` に解決結果が固定されます。このリポジトリの `.apm/` と `apm.yml` に記述した外部依存関係も、APM の依存解決対象になります。
+シンボリックリンクのため、`skills/<skill-name>/SKILL.md` を編集したり `git pull` するだけで、再インストール作業なしに Claude Code や Codex 等へ即時反映されます。
 
-対象プロジェクトに `.codex/` や `.cursor/` などのハーネスマーカーがない場合、APM は展開先を自動判定できません。継続的に同じ対象へ展開するプロジェクトでは、対象プロジェクトの `apm.yml` に `targets:` を明示します。
+### 2. ネイティブプラグインとして導入する（自動更新）
 
-```yaml
-targets:
-  - codex
-```
+各エージェントのプラグイン機構を使って GitHub リポジトリから直接購読できます。
 
-## グローバルにスキルをインストールする
-
-ユーザー全体で使えるようにする場合は、`-g` または `--global` を指定します。
+**Claude Code:**
 
 ```bash
-apm install --global /Users/ruo/Project/my-tools/rou0-skills
+/plugin marketplace add r0u3luv/skills
+/plugin install r0u3luv-skills@r0u3luv
 ```
 
-特定のスキルだけをインストールする場合は、`--skill` を併用します。
+**Codex:**
 
 ```bash
-apm install --global /Users/ruo/Project/my-tools/rou0-skills --skill pr-triage
+codex plugin marketplace add r0u3luv/skills
+codex plugin add r0u3luv-skills@r0u3luv
 ```
 
-このリポジトリ内で実行する場合も、グローバルインストールでは絶対パスを指定します。
+**GitHub Copilot CLI:**
 
 ```bash
-apm install --global /Users/ruo/Project/my-tools/rou0-skills --skill pr-triage
+copilot plugin marketplace add r0u3luv/skills
+copilot plugin install r0u3luv-skills@r0u3luv
 ```
 
-複数のスキルを指定する場合は、`--skill` を繰り返します。
+**Gemini CLI:**
 
 ```bash
-apm install -g /Users/ruo/Project/my-tools/rou0-skills --skill pr-triage --skill code-review
+gemini skills install https://github.com/r0u3luv/skills.git --path skills
 ```
 
-対象ランタイムを絞る場合は、`--target` を併用します。
+### 3. `npx skills` (skills.sh) で導入する（汎用・個別選択）
+
+Cursor, Windsurf, OpenCode など任意のハーネスや、特定のプロジェクトへファイルとしてコピーしたい場合は `skills` CLI を使用します。
 
 ```bash
-apm install -g /Users/ruo/Project/my-tools/rou0-skills --target codex --skill code-review
+# 全スキルをインストール
+npx skills@latest add r0u3luv/skills
+
+# 特定のスキルだけをインストール
+npx skills@latest add r0u3luv/skills --skill code-review
+npx skills@latest add r0u3luv/skills --skill pr-triage
 ```
 
-全スキルに戻す場合は、`--skill '*'` を指定します。
+### 4. 外部スキルの導入について
+
+外部で公開されているスキル（`mattpocock/skills`, `addyosmani/agent-skills`, `obra/superpowers` 等）は、このリポジトリに同梱・ラップせず、それぞれの公式プラグインまたは `npx skills` で直接導入します。
 
 ```bash
-apm install -g /Users/ruo/Project/my-tools/rou0-skills --skill '*'
+# 例: 外部スキルの個別導入
+npx skills@latest add mattpocock/skills --skill grill-me --skill grill-with-docs
+npx skills@latest add vercel-labs/skills --skill find-skills
+npx skills@latest add obra/superpowers --skill brainstorming
 ```
 
-## 依存関係の管理とインストール (Dependencies & Installation)
+## スキル作成ワークフロー
 
-APM (Agent Package Manager) を使用して、外部リポジトリ（GitHubなど）で公開されているスキルをこのリポジトリの依存関係として管理します。
-
-このリポジトリの `apm.yml` の `dependencies` セクションに外部スキルを記述します。
-
-```yaml
-dependencies:
-  apm:
-    - multica-ai/andrej-karpathy-skills
-    - git: mattpocock/skills
-      skills:
-        - grill-me
-```
-
-設定後、このリポジトリ内で以下を実行すると依存関係を解決し、バージョンを固定するための `apm.lock.yaml` を生成します。
-
-```bash
-apm install
-```
-
-配布用にスナップショット化したい場合は bundle を作成できます。
-
-```bash
-apm pack --archive
-```
-
-## 運用ルール
-
-- まず `.apm/` を編集すること。
-- 外部で使えそうなスキルは `apm.yml` の依存関係として追加すること。
-- 各 `SKILL.md` は簡潔に保ち、詳細な資料は `references/` に移動すること。
-- 決定論的な再現性が重要な場合にのみスクリプトを追加すること。
-- 共有する前に、現実的なフィクスチャを使用して重要なスキルを検証すること。
-
-## 初期ワークフロー
-
-1. `.apm/skills/<skill-name>/SKILL.md` にスキルを追加または更新する。
-2. `.apm/skills/<skill-name>/references/` 以下に関連するリファレンスを追加する。
-3. `docs/catalog.md` にスキルを記録する。
-4. 必要に応じて `apm install` で lockfile を更新する。
+1. `skills/<skill-name>/SKILL.md` にスキルを追加または更新する。
+2. 詳細なチェックリストや資料は `skills/<skill-name>/references/` 以下に配置する。
+3. 決定論的な再現性が重要な場合にのみ `skills/<skill-name>/scripts/` にスクリプトを追加する。
+4. `docs/catalog.md` にスキルを記録する。
+5. 新規スキルを追加した場合は `./scripts/link-skills.sh` を実行してローカルリンクを更新する。
