@@ -1,3 +1,8 @@
 # Local editor/agent state
 .antigravitycli/
 .DS_Store
+
+# Installed dependencies and generated external skills
+/node_modules/
+/.agents/skills/
+/.claude/skills/
