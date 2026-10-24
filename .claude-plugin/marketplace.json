@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-marketplace.json",
+  "name": "r0u3luv",
+  "description": "Personal AI agent skills for software engineering workflows.",
+  "owner": {
+    "name": "ruo",
+    "url": "https://github.com/r0u3luv"
+  },
+  "plugins": [
+    {
+      "name": "r0u3luv-skills",
+      "source": "./",
+      "description": "Personal AI agent skills, prompts, and subagents for software engineering workflows.",
+      "category": "engineering",
+      "keywords": [
+        "engineering",
+        "skills",
+        "code-review",
+        "pr-triage"
+      ]
+    }
+  ]
+}

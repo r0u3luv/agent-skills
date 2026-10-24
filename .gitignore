@@ -1,6 +1,3 @@
-
-# APM dependencies
-apm_modules/
-
 # Local editor/agent state
 .antigravitycli/
+.DS_Store
