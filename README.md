@@ -101,13 +101,13 @@ npm run skills:sync
 
 #### 一覧の変更・更新
 
-1. `package.json` の `skills` 配列で取得元 `source`、選択する `skills`、固定するコミット SHA `ref` を編集します。
+1. `package.json` の `skills` 配列で取得元 `source` と選択する `skills` を編集します。
 2. `npm run skills:sync` を実行します。宣言から外した同期管理下のスキルは削除されます。
 3. `package.json` と更新された `skills-lock.json` を一緒にコミットします。CLI の依存を変更した場合は `package-lock.json` も含めます。
 
-再実行時は取得済みのスキルを再利用します。取得元の最新版を追従するには、`ref` を新しいコミット SHA に変更してから同期してください。`skills update` で別管理せず、この一覧を更新元にします。
+`npm run skills:sync` の再実行時は取得済みのスキルを再利用します。取得元の最新版へ一括更新したい場合は `npm run skills:update` を実行し、更新された `skills-lock.json` をコミットしてください。
 
-同期は [実験的な CLI 機能](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#experimental-commands) です。挙動の変更を避けるため CLI は `1.7.4`、外部スキルはコミット SHA で固定しています。`skills-lock.json` のみから復元する `experimental_install` ではエージェント固有のリンクが作られないため、このリポジトリでは新しい環境でも `npm run skills:sync` を使用します。
+同期は [実験的な CLI 機能](https://github.com/vercel-labs/skills/blob/main/docs/commands.md#experimental-commands) です。挙動の変更を避けるため CLI は `1.7.4` に固定しています。`skills-lock.json` のみから復元する `experimental_install` ではエージェント固有のリンクが作られないため、このリポジトリでは新しい環境でも `npm run skills:sync` を使用します。
 
 ## スキル作成ワークフロー
 
